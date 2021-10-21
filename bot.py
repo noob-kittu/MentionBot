@@ -56,7 +56,7 @@ async def help(event):
                     link_preview=False
                    )
   
-@tsf.on(events.NewMessage(pattern="^/tagall ?(.*)"))
+@tsf.on(events.NewMessage(pattern="^/mention ?(.*)"))
 async def mentionall(event):
   if event.is_private:
     return await event.respond("__This command can be use in groups and channels!__")
