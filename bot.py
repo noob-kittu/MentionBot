@@ -35,7 +35,7 @@ api_id = int(os.environ.get("APP_ID"))
 api_hash = os.environ.get("API_HASH")
 bot_token = os.environ.get("TOKEN")
 tsf = TelegramClient('client', api_id, api_hash)
-startt = tsf.start(bot_token=bot_token)
+start = tsf.start(bot_token=bot_token)
 @tsf.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
   await event.reply("__**Tag All Bot**, I can Tag almost all members in group or channel 😉\nClick **/help** for more information__\n\n And Join [LEAGUE OF BOTS]()",
