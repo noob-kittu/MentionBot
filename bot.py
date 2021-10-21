@@ -38,7 +38,7 @@ tsf = TelegramClient('client', api_id, api_hash)
 startt = tsf.start(bot_token=bot_token)
 @tsf.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply("__**Tag All Bot**, I can Tag almost all members in group or channel 😉\nClick **/help** for more information__\n\n And Join [T.S.F]()",
+  await event.reply("__**Tag All Bot**, I can Tag almost all members in group or channel 😉\nClick **/help** for more information__\n\n And Join [LEAGUE OF BOTS]()",
                     buttons=(
                       [Button.url('📶Network', 'https://t.me/league_of_bots'),
                       Button.url('🚀 Github', 'https://github.com/Noob-kittu')]
