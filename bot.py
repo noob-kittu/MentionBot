@@ -31,41 +31,47 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-api_id = int(os.environ.get("APP_ID"))
-api_hash = os.environ.get("API_HASH")
-bot_token = os.environ.get("BOT_TOKEN")
-tsf = TelegramClient('client', api_id, api_hash)
-RUn = tsf.start(bot_token=bot_token)
-@tsf.on(events.NewMessage(pattern="^/start$"))
+APP_ID = int(os.environ.get("APP_ID"))
+API_HASH = os.environ.get("API_HASH")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+yone = TelegramClient('client', APP_ID, API_HASH)
+RUn = yone.start(bot_token=BOT_TOKEN)
+
+
+
+@yone.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply("__**Tag All Bot**, I can Tag almost all members in group or channel 😉\nClick **/help** for more information__\n\n And Join [LEAGUE OF BOTS]()",
+  await event.reply("**Hey, I'm Yone Mention Bot**, I can Tag almost all members in group or channel \nHit Command - **/help** for more information\n\n",
                     buttons=(
-                      [Button.url('📶Network', 'https://t.me/league_of_bots'),
-                      Button.url('🚀 Github', 'https://github.com/Noob-kittu')]
+                      [Button.url('Support', 'https://t.me/league_of_bots'),
+                      Button.url('Developer', 'https://github.com/Noob-kittu')]
                     ),
                     link_preview=False
                    )
-@tsf.on(events.NewMessage(pattern="^/help$"))
+
+
+                   
+@yone.on(events.NewMessage(pattern="^/help$"))
 async def help(event):
-  helptext = "**Help Menu of TagAll**\n\nCommand: /tagall\n__You can use this command with text what you want to Tag others.__\n`Example: /tagall Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__."
+  helptext = "**Help Menu of Yone Mention Bot**\n\nCommand: /Mention\nYou can use this command with text what you want to Tag others.\n`Example: /mention how are you buddy?`\nYou can you this command as a reply to any message. Bot will tag users to that replied messsage."
   await event.reply(helptext,
                     buttons=(
-                      [Button.url('📶Network', 'https://t.me/league_of_bots'),
-                      Button.url('🚀 Github', 'https://github.com/Noob-kittu')]
+                      [Button.url('Support', 'https://t.me/league_of_bots'),
+                      Button.url('Developer', 'https://github.com/Noob-kittu')]
                     ),
                     link_preview=False
                    )
   
-@tsf.on(events.NewMessage(pattern="^/mention ?(.*)"))
+@yone.on(events.NewMessage(pattern="^/mention ?(.*)"))
 async def mentionall(event):
   if event.is_private:
-    return await event.respond("__This command can be use in groups and channels!__")
+    return await event.respond("This command can be use in groups and channels!")
   
   admins = []
-  async for admin in tsf.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+  async for admin in yone.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
     admins.append(admin.id)
   if not event.sender_id in admins:
-    return await event.respond("__Only admins can mention all!__")
+    return await event.respond("Only admins can mention all!")
   
   if event.pattern_match.group(1):
     mode = "text_on_cmd"
@@ -74,33 +80,33 @@ async def mentionall(event):
     mode = "text_on_reply"
     msg = event.reply_to_msg_id
     if msg == None:
-        return await event.respond("__I can't mention members for older messages! (messages which are sent before I'm added to group)__")
+        return await event.respond("I can't mention members for older messages! (messages which are sent before I'm added to group)")
   elif event.pattern_match.group(1) and event.reply_to_msg_id:
-    return await event.respond("__Give me one argument!__")
+    return await event.respond("Give me one argument!")
   else:
-    return await event.respond("__Reply to a message or give me some text to mention others!__")
+    return await event.respond("Reply to a message or give me some text to mention others!")
   
   if mode == "text_on_cmd":
     usrnum = 0
     usrtxt = ""
-    async for usr in tsf.iter_participants(event.chat_id):
+    async for usr in yone.iter_participants(event.chat_id):
       usrnum += 1
       usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}) "
       if usrnum == 5:
-        await tsf.send_message(event.chat_id, f"{usrtxt}\n\n{msg}")
-        await asyncio.sleep(2)
+        await yone.send_message(event.chat_id, f"{msg} \n\n{usrtxt}")
+        await asyncio.sleep(1)
         usrnum = 0
         usrtxt = ""
         
   if mode == "text_on_reply":
     usrnum = 0
     usrtxt = ""
-    async for usr in tsf.iter_participants(event.chat_id):
+    async for usr in yone.iter_participants(event.chat_id):
       usrnum += 1
       usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}) "
       if usrnum == 5:
-        await tsf.send_message(event.chat_id, usrtxt, reply_to=msg)
-        await asyncio.sleep(2)
+        await yone.send_message(event.chat_id, usrtxt, reply_to=msg)
+        await asyncio.sleep(1)
         usrnum = 0
         usrtxt = ""
         
