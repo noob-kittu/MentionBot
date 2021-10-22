@@ -50,7 +50,7 @@ async def start(event):
                    )
 
 
-                   
+
 @yone.on(events.NewMessage(pattern="^/help$"))
 async def help(event):
   helptext = "**Help Menu of Yone Mention Bot**\n\nCommand: /Mention\nYou can use this command with text what you want to Tag others.\n`Example: /mention how are you buddy?`\nYou can you this command as a reply to any message. Bot will tag users to that replied messsage."
@@ -94,7 +94,7 @@ async def mentionall(event):
       usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}) "
       if usrnum == 5:
         await yone.send_message(event.chat_id, f"{msg} \n\n{usrtxt}")
-        await asyncio.sleep(1)
+        await asyncio.sleep(2)
         usrnum = 0
         usrtxt = ""
         
@@ -106,7 +106,7 @@ async def mentionall(event):
       usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}) "
       if usrnum == 5:
         await yone.send_message(event.chat_id, usrtxt, reply_to=msg)
-        await asyncio.sleep(1)
+        await asyncio.sleep(2)
         usrnum = 0
         usrtxt = ""
         
